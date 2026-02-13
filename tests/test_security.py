@@ -421,3 +421,263 @@ class TestExceptionHandling:
             content_type='application/json'
         )
         assert response.status_code == 400
+
+
+class TestDifferentFileTypes:
+    """Tests für verschiedene Dateitypen - stellt sicher dass alle Formate funktionieren"""
+    
+    def test_text_file_encryption(self, temp_dir):
+        """Testet Verschlüsselung von Textdateien"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "document.txt"
+        content = b"This is a plain text document.\nWith multiple lines.\n"
+        file_path.write_bytes(content)
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        # Decrypt und verify
+        output_path = temp_dir / "decrypted_document.txt"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        assert output_path.read_bytes() == content
+    
+    def test_pdf_file_encryption(self, temp_dir):
+        """Testet Verschlüsselung von PDF-ähnlichen Binärdateien"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "document.pdf"
+        # Simuliere PDF-Header und Binärdaten
+        content = b"%PDF-1.4\n" + os.urandom(1024) + b"\n%%EOF"
+        file_path.write_bytes(content)
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        output_path = temp_dir / "decrypted_document.pdf"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        assert output_path.read_bytes() == content
+    
+    def test_executable_file_encryption(self, temp_dir):
+        """Testet Verschlüsselung von .exe Dateien (Binärdaten)"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "program.exe"
+        # Simuliere EXE-Header (MZ magic number) und Binärdaten
+        content = b"MZ\x90\x00" + os.urandom(2048)
+        file_path.write_bytes(content)
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        output_path = temp_dir / "decrypted_program.exe"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        # Verify binary integrity
+        assert output_path.read_bytes() == content
+        # Verify EXE header preserved
+        assert output_path.read_bytes()[:2] == b"MZ"
+    
+    def test_image_file_encryption(self, temp_dir):
+        """Testet Verschlüsselung von Bilddateien"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "photo.jpg"
+        # Simuliere JPEG-Header und Binärdaten
+        content = b"\xFF\xD8\xFF\xE0" + os.urandom(5000) + b"\xFF\xD9"
+        file_path.write_bytes(content)
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        output_path = temp_dir / "decrypted_photo.jpg"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        assert output_path.read_bytes() == content
+    
+    def test_zip_archive_encryption(self, temp_dir):
+        """Testet Verschlüsselung von ZIP-Archiven"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "archive.zip"
+        # Simuliere ZIP-Header
+        content = b"PK\x03\x04" + os.urandom(3000)
+        file_path.write_bytes(content)
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        output_path = temp_dir / "decrypted_archive.zip"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        assert output_path.read_bytes() == content
+        assert output_path.read_bytes()[:4] == b"PK\x03\x04"
+    
+    def test_empty_file_encryption(self, temp_dir):
+        """Testet Verschlüsselung von leeren Dateien"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        file_path = temp_dir / "empty.dat"
+        file_path.write_bytes(b"")
+        
+        aes_key = os.urandom(32)
+        encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+        
+        output_path = temp_dir / "decrypted_empty.dat"
+        aes_gcm_decrypt_to_file(
+            aes_key,
+            encrypted["nonce"],
+            encrypted["ciphertext"],
+            str(output_path)
+        )
+        
+        assert output_path.read_bytes() == b""
+        assert output_path.stat().st_size == 0
+
+
+class TestFileSizeLimits:
+    """Detaillierte Tests für Dateigrößen-Limits"""
+    
+    def test_file_at_max_size_accepted(self, temp_dir):
+        """Testet dass Dateien genau am Limit akzeptiert werden"""
+        from clients.crypto import aes_gcm_encrypt_file, MAX_FILE_SIZE
+        
+        file_path = temp_dir / "at_limit.bin"
+        # Erstelle Datei genau am Limit (16 MB)
+        with open(file_path, "wb") as f:
+            chunk_size = 1024 * 1024  # 1 MB chunks
+            for _ in range(MAX_FILE_SIZE // chunk_size):
+                f.write(b"X" * chunk_size)
+        
+        assert file_path.stat().st_size == MAX_FILE_SIZE
+        
+        aes_key = os.urandom(32)
+        # Sollte funktionieren
+        result = aes_gcm_encrypt_file(aes_key, str(file_path))
+        assert "nonce" in result
+        assert "ciphertext" in result
+    
+    def test_file_one_byte_over_limit_rejected(self, temp_dir):
+        """Testet dass Dateien auch nur 1 Byte über dem Limit abgelehnt werden"""
+        from clients.crypto import aes_gcm_encrypt_file, MAX_FILE_SIZE
+        
+        file_path = temp_dir / "over_limit.bin"
+        # Erstelle Datei 1 Byte über dem Limit
+        with open(file_path, "wb") as f:
+            chunk_size = 1024 * 1024
+            for _ in range(MAX_FILE_SIZE // chunk_size):
+                f.write(b"X" * chunk_size)
+            f.write(b"Y")  # 1 extra byte
+        
+        assert file_path.stat().st_size == MAX_FILE_SIZE + 1
+        
+        aes_key = os.urandom(32)
+        with pytest.raises(ValueError, match="File too large"):
+            aes_gcm_encrypt_file(aes_key, str(file_path))
+    
+    def test_different_size_files(self, temp_dir):
+        """Testet verschiedene Dateigrößen unter dem Limit"""
+        from clients.crypto import aes_gcm_encrypt_file
+        
+        test_sizes = [
+            1,                      # 1 Byte
+            1024,                   # 1 KB
+            1024 * 100,             # 100 KB
+            1024 * 1024,            # 1 MB
+            1024 * 1024 * 5,        # 5 MB
+            1024 * 1024 * 10,       # 10 MB
+        ]
+        
+        aes_key = os.urandom(32)
+        
+        for size in test_sizes:
+            file_path = temp_dir / f"file_{size}.bin"
+            file_path.write_bytes(b"X" * size)
+            
+            # Alle sollten funktionieren
+            result = aes_gcm_encrypt_file(aes_key, str(file_path))
+            assert "nonce" in result
+            assert "ciphertext" in result
+    
+    def test_filename_formats_all_accepted(self, temp_dir):
+        """Testet dass verschiedene Dateiendungen akzeptiert werden"""
+        from clients.crypto import aes_gcm_encrypt_file
+        
+        extensions = [
+            "txt", "pdf", "doc", "docx", "xls", "xlsx", 
+            "jpg", "png", "gif", "bmp", "svg",
+            "exe", "dll", "so", "dylib",
+            "zip", "tar", "gz", "7z", "rar",
+            "mp3", "mp4", "avi", "mkv",
+            "py", "js", "java", "cpp", "h"
+        ]
+        
+        aes_key = os.urandom(32)
+        
+        for ext in extensions:
+            file_path = temp_dir / f"testfile.{ext}"
+            file_path.write_bytes(b"Test content for " + ext.encode())
+            
+            # Alle Dateitypen sollten verschlüsselbar sein
+            result = aes_gcm_encrypt_file(aes_key, str(file_path))
+            assert "nonce" in result
+            assert "ciphertext" in result
+    
+    def test_special_filename_characters_handled(self, temp_dir):
+        """Testet dass Dateien mit Sonderzeichen im Namen funktionieren"""
+        from clients.crypto import aes_gcm_encrypt_file, aes_gcm_decrypt_to_file
+        
+        # Erlaubte Sonderzeichen in Dateinamen
+        special_names = [
+            "file-with-dashes.txt",
+            "file_with_underscores.txt",
+            "file.multiple.dots.txt",
+            "file (with parentheses).txt",
+            "file [with brackets].txt",
+        ]
+        
+        aes_key = os.urandom(32)
+        
+        for name in special_names:
+            file_path = temp_dir / name
+            content = f"Content for {name}".encode()
+            file_path.write_bytes(content)
+            
+            encrypted = aes_gcm_encrypt_file(aes_key, str(file_path))
+            
+            output_path = temp_dir / f"dec_{name}"
+            aes_gcm_decrypt_to_file(
+                aes_key,
+                encrypted["nonce"],
+                encrypted["ciphertext"],
+                str(output_path)
+            )
+            
+            assert output_path.read_bytes() == content
