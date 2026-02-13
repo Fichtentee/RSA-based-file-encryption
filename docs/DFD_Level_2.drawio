@@ -1,0 +1,227 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="DFD-Level-2" name="DFD Level 2 - Prozess 3 (Verschlüsseln &amp; Senden)">
+    <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Titel -->
+        <mxCell id="title" value="DFD Level 2 - Prozess 3: Nachricht verschlüsseln &amp; senden&#xa;Detaillierte Verschlüsselungs- und Übertragungsprozesse" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="30" width="600" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Externe Entität: Client 1 -->
+        <mxCell id="client1" value="Client 1&#xa;(Sender)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.1: Datei einlesen -->
+        <mxCell id="process3_1" value="3.1&#xa;&#xa;Datei&#xa;einlesen" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="280" y="230" width="100" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.2: AES-Key generieren -->
+        <mxCell id="process3_2" value="3.2&#xa;&#xa;AES-Key&#xa;generieren&#xa;(256 bit)" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="450" y="150" width="110" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.3: Datei mit AES-GCM verschlüsseln -->
+        <mxCell id="process3_3" value="3.3&#xa;&#xa;Datei mit&#xa;AES-256-GCM&#xa;verschlüsseln" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="450" y="320" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.4: AES-Key mit RSA-OAEP verschlüsseln -->
+        <mxCell id="process3_4" value="3.4&#xa;&#xa;AES-Key mit&#xa;RSA-OAEP&#xa;verschlüsseln" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="650" y="150" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.5: UUID-Signatur erstellen -->
+        <mxCell id="process3_5" value="3.5&#xa;&#xa;UUID-Signatur&#xa;erstellen&#xa;(RSASSA-PSS)" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="650" y="320" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.6: Payload zusammenstellen -->
+        <mxCell id="process3_6" value="3.6&#xa;&#xa;Payload&#xa;zusammen-&#xa;stellen" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="850" y="230" width="110" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3.7: An Server übertragen -->
+        <mxCell id="process3_7" value="3.7&#xa;&#xa;An Server&#xa;übertragen&#xa;(POST /deliver)" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="230" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D1: Client Keys -->
+        <mxCell id="store1" value="D1: Client Keys (Private)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="480" width="200" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D2: Partner Keys -->
+        <mxCell id="store2" value="D2: Partner Public Keys" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="40" width="200" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D3: Server Storage -->
+        <mxCell id="store3" value="D3: Server Message Queue" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="400" width="200" height="35" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenfluss: Client1 -> Prozess 3.1 -->
+        <mxCell id="flow1" value="Dateiname, Dateipfad" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client1" target="process3_1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.1 -> Prozess 3.3 -->
+        <mxCell id="flow2" value="Datei (Klartext bytes)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_1" target="process3_3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.2 -> Prozess 3.3 -->
+        <mxCell id="flow3" value="AES-Key (32 bytes)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_2" target="process3_3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.2 -> Prozess 3.4 -->
+        <mxCell id="flow4" value="AES-Key (32 bytes)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_2" target="process3_4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Store2 -> Prozess 3.4 -->
+        <mxCell id="flow5" value="Partner Public Key lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="store2" target="process3_4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Store1 -> Prozess 3.5 -->
+        <mxCell id="flow6" value="Private Key, UUID lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="store1" target="process3_5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.3 -> Prozess 3.6 -->
+        <mxCell id="flow7" value="Ciphertext, Nonce, Tag" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_3" target="process3_6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.4 -> Prozess 3.6 -->
+        <mxCell id="flow8" value="Encrypted AES-Key (Base64)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_4" target="process3_6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.5 -> Prozess 3.6 -->
+        <mxCell id="flow9" value="UUID-Signatur (Base64)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_5" target="process3_6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.6 -> Prozess 3.7 -->
+        <mxCell id="flow10" value="JSON Payload" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_6" target="process3_7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.7 -> Store3 -->
+        <mxCell id="flow11" value="Encrypted Message speichern" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3_7" target="store3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenfluss: Prozess 3.7 -> Client1 (Bestätigung) -->
+        <mxCell id="flow12" value="HTTP Response (200 OK)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="process3_7" target="client1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="500" as="sourcePoint" />
+            <mxPoint x="650" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1110" y="140" />
+              <mxPoint x="140" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Prozess-Details als Textboxen -->
+        <mxCell id="detail3_2" value="os.urandom(32)&#xa;→ 256-bit Key" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="455" y="100" width="100" height="35" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="detail3_3" value="AES-256-GCM&#xa;+ AAD (Sender-Alias)&#xa;→ Ciphertext + Tag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="440" y="455" width="140" height="45" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="detail3_4" value="RSA-OAEP&#xa;(Partner Public Key)&#xa;SHA-256" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="780" y="180" width="110" height="45" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="detail3_5" value="RSASSA-PSS&#xa;(Private Key)&#xa;SHA-256" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="780" y="360" width="110" height="45" as="geometry" />
+        </mxCell>
+        
+        <!-- Informationsbox: JSON Struktur -->
+        <mxCell id="info_json" value="JSON Payload Struktur:&#xa;{&#xa;  &quot;from_alias&quot;: &quot;Client1&quot;,&#xa;  &quot;to_alias&quot;: &quot;Client2&quot;,&#xa;  &quot;proof_signature&quot;: &quot;...&quot;,&#xa;  &quot;payload&quot;: {&#xa;    &quot;enc_key_b64&quot;: &quot;...&quot;,&#xa;    &quot;nonce&quot;: &quot;...&quot;,&#xa;    &quot;ciphertext&quot;: &quot;...&quot;,&#xa;    &quot;tag&quot;: &quot;...&quot;&#xa;  },&#xa;  &quot;meta&quot;: {&#xa;    &quot;filename&quot;: &quot;test.txt&quot;&#xa;  }&#xa;}" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;verticalAlign=top;fontSize=9;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="80" y="580" width="280" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- Sicherheitshinweise -->
+        <mxCell id="security_box" value="🔒 Sicherheitseigenschaften:&#xa;&#xa;✓ Vertraulichkeit: AES-256-GCM&#xa;✓ Integrität: GCM Authentication Tag&#xa;✓ Authentizität: RSASSA-PSS Signatur&#xa;✓ Forward Secrecy: Neuer AES-Key pro Nachricht&#xa;✓ AAD: Sender-Binding gegen Manipulation&#xa;✓ Nonce: Einmaligkeit garantiert" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="580" width="320" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Kryptografie-Details -->
+        <mxCell id="crypto_box" value="🔐 Verwendete Algorithmen:&#xa;&#xa;• AES-256-GCM (Symmetrisch)&#xa;• RSA-OAEP SHA-256 (Key-Transport)&#xa;• RSASSA-PSS SHA-256 (Signatur)&#xa;• os.urandom() (CSPRNG)&#xa;• Base64 (Transport-Encoding)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="580" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Legende -->
+        <mxCell id="legend_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="580" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_title" value="Legende" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="590" width="100" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_process" value="3.X&#xa;Prozess" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="625" width="60" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_store" value="Datenspeicher" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="675" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_flow" value="Datenfluss" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1080" y="710" as="sourcePoint" />
+            <mxPoint x="1180" y="710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

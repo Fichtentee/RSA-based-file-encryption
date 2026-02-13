@@ -1,0 +1,240 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="DFD-Level-1" name="DFD Level 1 - Hauptprozesse">
+    <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Titel -->
+        <mxCell id="title" value="DFD Level 1 - Hauptprozesse&#xa;RSA Hybrid FileCrypter" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="30" width="400" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Externe Entitäten -->
+        <mxCell id="client1" value="Client 1&#xa;(Sender)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="client2" value="Client 2&#xa;(Empfänger)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 1: Client-Registrierung -->
+        <mxCell id="process1" value="1&#xa;&#xa;Client-&#xa;Registrierung" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="180" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 2: Schlüsselaustausch -->
+        <mxCell id="process2" value="2&#xa;&#xa;Schlüssel-&#xa;austausch" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="380" width="120" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 3: Nachricht verschlüsseln & senden -->
+        <mxCell id="process3" value="3&#xa;&#xa;Nachricht&#xa;verschlüsseln&#xa;&amp; senden" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="620" y="280" width="140" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Prozess 4: Nachricht empfangen & entschlüsseln -->
+        <mxCell id="process4" value="4&#xa;&#xa;Nachricht&#xa;empfangen &amp;&#xa;entschlüsseln" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="660" width="140" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D1: Client Keys -->
+        <mxCell id="store1" value="D1: Client Keys (Private &amp; Public)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="180" width="280" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D2: Partner Keys -->
+        <mxCell id="store2" value="D2: Partner Public Keys" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="380" width="280" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D3: Server Message Queue -->
+        <mxCell id="store3" value="D3: Server Message Queue" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="520" width="280" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenspeicher D4: Received Files -->
+        <mxCell id="store4" value="D4: Received Files" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="700" width="280" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Datenflüsse Client1 -> Prozess 1 -->
+        <mxCell id="flow1_1" value="Alias, Public Key" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client1" target="process1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 1 -> Store 1 -->
+        <mxCell id="flow1_2" value="UUID, Keys speichern" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process1" target="store1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 1 -> Prozess 1 -->
+        <mxCell id="flow1_3" value="UUID bestätigen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="store1" target="process1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Client1 -> Prozess 2 -->
+        <mxCell id="flow2_1" value="Partner-Anfrage (Alias)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client1" target="process2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 2 -> Store 1 -->
+        <mxCell id="flow2_2" value="Public Key lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process2" target="store1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 1 -> Prozess 2 -->
+        <mxCell id="flow2_3" value="Partner Public Key" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="store1" target="process2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 2 -> Store 2 -->
+        <mxCell id="flow2_4" value="Partner Key speichern" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process2" target="store2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 2 -> Client1 -->
+        <mxCell id="flow2_5" value="Partner Public Key" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="process2" target="client1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Client1 -> Prozess 3 -->
+        <mxCell id="flow3_1" value="Datei (Klartext)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client1" target="process3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 2 -> Prozess 3 -->
+        <mxCell id="flow3_2" value="Partner Public Key lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="store2" target="process3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 1 -> Prozess 3 -->
+        <mxCell id="flow3_3" value="Private Key, UUID lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="store1" target="process3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 3 -> Store 3 -->
+        <mxCell id="flow3_4" value="Encrypted Message speichern" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process3" target="store3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Client2 -> Prozess 4 -->
+        <mxCell id="flow4_1" value="Inbox-Anfrage" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="client2" target="process4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 3 -> Prozess 4 -->
+        <mxCell id="flow4_2" value="Encrypted Messages lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="store3" target="process4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Store 1 -> Prozess 4 (Client2) -->
+        <mxCell id="flow4_3" value="Private Key lesen" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="store1" target="process4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="990" y="600" />
+              <mxPoint x="420" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 4 -> Store 4 -->
+        <mxCell id="flow4_4" value="Entschlüsselte Datei speichern" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1" source="process4" target="store4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Datenflüsse Prozess 4 -> Client2 -->
+        <mxCell id="flow4_5" value="Entschlüsselte Datei" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="process4" target="client2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="400" as="sourcePoint" />
+            <mxPoint x="650" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legende -->
+        <mxCell id="legend_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="820" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_title" value="Legende" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="830" width="100" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_external" value="Externe Entität" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="860" y="860" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_process" value="Prozess" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="860" y="895" width="60" height="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_store" value="Datenspeicher" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="860" y="945" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend_flow" value="Datenfluss" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1000" y="872" as="sourcePoint" />
+            <mxPoint x="1100" y="872" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend_response" value="Antwort" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1000" y="915" as="sourcePoint" />
+            <mxPoint x="1100" y="915" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,101 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica-Bold
+>>
+/F2 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+>>
+>>
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 850
+>>
+stream
+BT
+/F1 16 Tf
+50 750 Td
+(CONFIDENTIAL CONTRACT) Tj
+0 -30 Td
+/F2 12 Tf
+(Service Agreement - Client1 & Client2) Tj
+0 -20 Td
+(Date: February 12, 2026) Tj
+0 -40 Td
+(TERMS AND CONDITIONS) Tj
+0 -30 Td
+/F2 11 Tf
+(1. Scope of Services) Tj
+0 -15 Td
+(   RSA-4096 and AES-256-GCM encryption infrastructure) Tj
+0 -25 Td
+(2. Payment Terms) Tj
+0 -15 Td
+(   Total contract value: EUR 150,000) Tj
+0 -15 Td
+(   Payment schedule: Quarterly installments) Tj
+0 -25 Td
+(3. Confidentiality) Tj
+0 -15 Td
+(   All parties agree to maintain strict confidentiality) Tj
+0 -15 Td
+(   regarding project details and technical specifications.) Tj
+0 -25 Td
+(4. Duration) Tj
+0 -15 Td
+(   Valid from March 1, 2026 to February 28, 2027.) Tj
+0 -25 Td
+(5. Termination Clause) Tj
+0 -15 Td
+(   Either party may terminate with 30 days notice.) Tj
+0 -50 Td
+(Signatures:) Tj
+0 -30 Td
+(__________________        __________________) Tj
+0 -15 Td
+(Client1                   Client2) Tj
+ET
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000364 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+1268
+%%EOF

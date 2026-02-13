@@ -1,0 +1,1 @@
+# server/__init__.py, server wird als Package mit app.py, crypto.py, storage.py organisiert
