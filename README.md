@@ -103,10 +103,8 @@ python -m clients.client --alias Client1 --no-verify-ssl request --partner Clien
 #### in Konsolenfenster 2: Datei senden
 ##### Verfügbare Testdateien:
 Im Verzeichnis `files/` befinden sich vorgefertigte Testdateien:
-- **secret_message.txt** - Geheime Projektnachricht
-- **meeting_notes.txt** - Vertrauliche Meeting-Notizen
 - **credentials.txt** - Sensible Zugangsdaten
-- **contract_draft.pdf** - PDF-Vertrag (zeigt, dass alle Dateitypen funktionieren!)
+- **contract_draft.pdf** - PDF-Vertrag
 
 
 ```bash
@@ -129,23 +127,12 @@ python -m clients.client --alias Client2 --no-verify-ssl receive
 
 ---
 
-## Aufräumen
-
-Um alle Client-Daten zu löschen und neu zu starten zu können:
-
-Clients manuell im Dateimanager löschen oder per command
-
-```bash
-# Alle Clients entfernen
-rm -rf Client*/
-```
-
----
-
 ## Ausblick nach akzeptiertem Prototyp
 
 - **Chunk‑Streaming**: für größere Dateien (>16 MB) als Ausblick sinnvoll. Aktuell wird alles auf einmal im RAM verarbeitet, durch Originaltext, Ciphertext, Base64-String und JSON wird ungefähr die dreifache Menge an RAM benötigt, wie die Datei selbst groß ist. Zudem besteht das default Flask Limit von 16 MB. Daher wird empfohlen den filecrypter nur für max. 10 MB große Dateien zu verwenden.
 - **Persistenz**: `server/storage.py` auf z. B. SQLite umstellen, sonst gehen Daten (Client alias und die Zuordnung zum öffentlichem Schlüssel) nach einem Neustart verloren.
+- **TLS-Zertifikat:** gültiges von CA statt self-signed hinterlegen.
+- **Monitoring:** Code refactoting gemäß Snyk output, Dependencies tracken und Regeln für auto/semi-auto Updates festlegen.
 <!-- Nice to have: - **/whoami**‑Endpoint: gibt `alias` entsprechende `uuid` zurück (hilft Clients ggf. bei einer Selbstüberprüfung). -->
 <!-- Umgesetzt: - **AAD**: Absender-Name (Client1)schützt vor „gefälschten Absender“-Angriffen,
 Dateiname verhindert, dass Angreifer z. B. test.txt zu passwort.txt manipulieren,
